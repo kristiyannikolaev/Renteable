@@ -1,0 +1,18 @@
+<div class="sidenav" [ngClass]="isOpened ? 'sidenav-opened' : '' ">
+    <div class="logo-container">
+        <button class="logo" (click)="openNav()">R</button>
+        <div class="logo-text" *ngIf="isOpened">Renteable</div>
+        <button class="btn-close" *ngIf="isOpened" (click)="closeNav()">
+            <i class="fa fa-times close-icon"></i>
+        </button>
+    </div>
+    <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navData">
+            <a class="sidenav-nav-link" [routerLink]="[data.routerLink]">
+                <i class="sidenav-link-icon" [class]="data.icon"></i>
+                <span class="sidenav-link-text" *ngIf="isOpened">{{ data.label }}</span>
+            </a>
+
+        </li>
+    </ul>
+</div>
