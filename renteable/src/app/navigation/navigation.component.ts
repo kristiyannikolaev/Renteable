@@ -18,7 +18,10 @@ export class NavigationComponent implements OnInit{
     this.isOpened = false;
   }
 
-  openNav() {
-    this.isOpened = true;
+  // openNav() {
+  //   this.isOpened = true;
+  // }
+  toggleSidebar() {
+    this.isOpened = !this.isOpened;
   }
 }
