@@ -3,6 +3,8 @@ import{ animate, style, transition, trigger, keyframes } from '@angular/animatio
 
 import { navbarData } from './navbar-data';
 import { sidenavToggle } from '../interfaces/sidenavToggle';
+import { UserService } from '../user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -52,6 +54,8 @@ export class NavigationComponent implements OnInit{
   screenWidth: number = 0;
   navData = navbarData;
 
+  constructor(private userService: UserService, private router: Router) {}
+
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
   }
@@ -64,5 +68,11 @@ export class NavigationComponent implements OnInit{
   toggleSidebar() {
     this.isOpened = !this.isOpened;
     this.onToggleSidenav.emit({screenWidth:this.screenWidth, isOpened: this.isOpened});
+  }
+
+  logout() {
+    this.userService.logout().subscribe(() => {
+      this.router.navigate(['/user/login']);
+    })
   }
 }
