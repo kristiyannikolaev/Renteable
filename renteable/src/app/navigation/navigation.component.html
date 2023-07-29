@@ -2,7 +2,7 @@
     <div class="logo-container">
         <button class="logo" (click)="toggleSidebar()">R</button>
         <div class="logo-text" *ngIf="isOpened">Renteable</div>
-        <button class="btn-close" *ngIf="isOpened" (click)="closeNav()">
+        <button class="btn-close" @rotate *ngIf="isOpened" (click)="closeNav()">
             <i class="fa fa-times close-icon"></i>
         </button>
     </div>

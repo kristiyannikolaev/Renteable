@@ -1,11 +1,25 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import{ animate, style, transition, trigger, keyframes } from '@angular/animations';
+
 import { navbarData } from './navbar-data';
 import { sidenavToggle } from '../interfaces/sidenavToggle';
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.css']
+  styleUrls: ['./navigation.component.css'],
+  animations: [
+    trigger('rotate', [
+      transition(':enter', [
+        animate('1000ms',
+          keyframes([
+            style({transform: 'rotate(0deg)', offset: '0'}),
+            style({transform: 'rotate(2turn', offset: '1'})  
+          ])
+        )
+      ])
+    ])
+  ]
 })
 export class NavigationComponent implements OnInit{
 
