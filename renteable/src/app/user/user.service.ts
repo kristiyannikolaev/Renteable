@@ -8,7 +8,8 @@ import { from } from 'rxjs';
 export class UserService {
 
   userData: any;
-  
+  curentUser$ = authState(this.auth);
+
   constructor(private auth: Auth) { 
     authState(auth).subscribe((user) => {
       if(user) {

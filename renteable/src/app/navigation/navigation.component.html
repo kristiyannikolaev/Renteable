@@ -7,20 +7,33 @@
         </button>
     </div>
     <ul class="sidenav-nav">
-        <li class="sidenav-nav-item" *ngFor="let data of navData">
-            <a class="sidenav-nav-link" [routerLink]="[data.routerLink]"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <i class="sidenav-link-icon" [class]="data.icon"></i>
-                <span class="sidenav-link-text" @fadeInOut *ngIf="isOpened">{{ data.label }}</span>
-            </a>
-
-        </li>
-        <li class="sidenav-nav-item">
-            <a class="sidenav-nav-link" (click)="logout()"> 
-                <i class="sidenav-link-icon fa fa-sign-out"></i>
-                <span sidenav-link-text @fadeInOut *ngIf="isOpened">Logout</span>
-            </a>
-        </li>
+        <ng-container *ngIf="user$ | async">
+            <li class="sidenav-nav-item" *ngFor="let data of navDataLoggedIn">
+                <a class="sidenav-nav-link" [routerLink]="[data.routerLink]"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <i class="sidenav-link-icon" [class]="data.icon"></i>
+                    <span class="sidenav-link-text" @fadeInOut *ngIf="isOpened">{{ data.label }}</span>
+                </a>
+    
+            </li>
+            <li class="sidenav-nav-item">
+                <a class="sidenav-nav-link" (click)="logout()"> 
+                    <i class="sidenav-link-icon fa fa-sign-out"></i>
+                    <span sidenav-link-text @fadeInOut *ngIf="isOpened">Logout</span>
+                </a>
+            </li>
+        </ng-container>
+        <ng-container *ngIf="!(user$ | async)">
+            <li class="sidenav-nav-item" *ngFor="let data of navDataLoggedOut">
+                <a class="sidenav-nav-link" [routerLink]="[data.routerLink]"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <i class="sidenav-link-icon" [class]="data.icon"></i>
+                    <span class="sidenav-link-text" @fadeInOut *ngIf="isOpened">{{ data.label }}</span>
+                </a>
+    
+            </li>
+        </ng-container>
     </ul>
 </div>

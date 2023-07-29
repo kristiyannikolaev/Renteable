@@ -1,7 +1,8 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import{ animate, style, transition, trigger, keyframes } from '@angular/animations';
+import { Observable } from 'rxjs';
 
-import { navbarData } from './navbar-data';
+import { navbarDataLoggedIn, navbarDataLoggedOut } from './navbar-data';
 import { sidenavToggle } from '../interfaces/sidenavToggle';
 import { UserService } from '../user/user.service';
 import { Router } from '@angular/router';
@@ -52,12 +53,18 @@ export class NavigationComponent implements OnInit{
 
   isOpened: boolean = false;
   screenWidth: number = 0;
-  navData = navbarData;
+  navDataLoggedIn = navbarDataLoggedIn;
+  navDataLoggedOut = navbarDataLoggedOut;
 
-  constructor(private userService: UserService, private router: Router) {}
+  user$: Observable<unknown>;
+
+  constructor(private userService: UserService, private router: Router) {
+    this.user$ = this.userService.curentUser$;
+  }
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
+    
   }
 
   closeNav() {

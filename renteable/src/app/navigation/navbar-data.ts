@@ -1,4 +1,17 @@
-export const navbarData = [
+export const navbarDataLoggedIn = [
+    {
+        routerLink: 'home',
+        icon: 'fa fa-home',
+        label: 'Home'
+    },
+    {
+        routerLink: 'user/profile',
+        icon: 'fa fa-user',
+        label: 'Profile'
+    },
+]
+
+export const navbarDataLoggedOut = [
     {
         routerLink: 'home',
         icon: 'fa fa-home',
@@ -13,10 +26,5 @@ export const navbarData = [
         routerLink: 'user/register',
         icon: 'fa fa-user-plus',
         label: 'Register'
-    },
-    {
-        routerLink: 'user/profile',
-        icon: 'fa fa-user',
-        label: 'Profile'
     },
 ]
