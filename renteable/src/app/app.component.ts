@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { sidenavToggle } from './interfaces/sidenavToggle';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'renteable';
+
+  isSidenavOpened: boolean = false;
+  screenWidth:number = 0;
+
+  onToggleSidenav(data: sidenavToggle) {
+    this.screenWidth = data.screenWidth;
+    this.isSidenavOpened = data.isOpened;
+  }
 }
