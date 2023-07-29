@@ -11,11 +11,25 @@ import { sidenavToggle } from '../interfaces/sidenavToggle';
   animations: [
     trigger('rotate', [
       transition(':enter', [
-        animate('1000ms',
+        animate('500ms',
           keyframes([
             style({transform: 'rotate(0deg)', offset: '0'}),
             style({transform: 'rotate(2turn', offset: '1'})  
           ])
+        )
+      ])
+    ]),
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({opacity: 0}),
+        animate('350ms',
+          style({opacity: 1})
+        )
+      ]),
+      transition(':leave', [
+        style({opacity: 1}),
+        animate('150ms',
+          style({opacity: 0})
         )
       ])
     ])
@@ -25,8 +39,8 @@ export class NavigationComponent implements OnInit{
 
   @Output() onToggleSidenav: EventEmitter<sidenavToggle> = new EventEmitter();
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  @HostListener('window:resize')
+  onResize() {
     this.screenWidth = window.innerWidth;
     if(this.screenWidth < 768) {
       this.isOpened = false;

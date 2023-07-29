@@ -1,7 +1,7 @@
 <div class="sidenav" [ngClass]="isOpened ? 'sidenav-opened' : '' ">
     <div class="logo-container">
         <button class="logo" (click)="toggleSidebar()">R</button>
-        <div class="logo-text" *ngIf="isOpened">Renteable</div>
+        <div class="logo-text" @fadeInOut *ngIf="isOpened">Renteable</div>
         <button class="btn-close" @rotate *ngIf="isOpened" (click)="closeNav()">
             <i class="fa fa-times close-icon"></i>
         </button>
@@ -12,7 +12,7 @@
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <i class="sidenav-link-icon" [class]="data.icon"></i>
-                <span class="sidenav-link-text" *ngIf="isOpened">{{ data.label }}</span>
+                <span class="sidenav-link-text" @fadeInOut *ngIf="isOpened">{{ data.label }}</span>
             </a>
 
         </li>
