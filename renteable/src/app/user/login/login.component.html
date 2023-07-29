@@ -3,14 +3,32 @@
         <form #loginForm="ngForm" (ngSubmit)="submitForm(loginForm)">
             <h1>Login</h1>
             <div class="form-field">
-                <input type="text" id="email" placeholder="email" required ngModel name="email" #email="ngModel">
+                <input type="text" class="form-control" id="email" name="email" placeholder="email" required pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" ngModel #email="ngModel" />
                 <i class="fa fa-envelope"></i>
             </div>
+
+            <ng-container *ngIf="email.touched">
+                <p class="error" *ngIf="email.errors?.['required']">
+                    Email is required
+                </p>
+                <p class="error" *ngIf="email.errors?.['pattern']">
+                    Invalid email
+                </p>
+            </ng-container>
     
             <div class="form-field">
-                <input type="password" id="password" placeholder="password" ngModel name="password" #password="ngModel">
+                <input type="password" class="form-control" id="password" name="password" placeholder="password" required minlength="5" ngModel #password="ngModel" />
                 <i class="fa fa-key"></i>
             </div>
+
+            <ng-container *ngIf="password.touched">
+                <p class="error" *ngIf="password.errors?.['required']">
+                    Password is required
+                </p>
+                <p class="error" *ngIf="password.errors?.['minlength']">
+                    Password must be at least 5 characters
+                </p>
+            </ng-container>
             
             <div class="submit-btn">
                 <button type="submit" [disabled]="loginForm.invalid">Log in</button>
