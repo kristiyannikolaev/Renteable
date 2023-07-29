@@ -3,11 +3,11 @@
         <form #loginForm="ngForm" (ngSubmit)="submitForm(loginForm)">
             <h1>Login</h1>
             <div class="form-field">
-                <input type="text" class="form-control" id="email" name="email" placeholder="email" required pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" ngModel #email="ngModel" />
+                <input type="text" class="form-control" id="email" name="Email" placeholder="email" required pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" ngModel #email="ngModel" />
                 <i class="fa fa-envelope"></i>
             </div>
 
-            <ng-container *ngIf="email.touched">
+            <ng-container *ngIf="email.invalid && email.touched">
                 <p class="error" *ngIf="email.errors?.['required']">
                     Email is required
                 </p>
@@ -17,11 +17,11 @@
             </ng-container>
     
             <div class="form-field">
-                <input type="password" class="form-control" id="password" name="password" placeholder="password" required minlength="5" ngModel #password="ngModel" />
+                <input type="password" class="form-control" id="password" name="Password" placeholder="password" required minlength="5" ngModel #password="ngModel" />
                 <i class="fa fa-key"></i>
             </div>
 
-            <ng-container *ngIf="password.touched">
+            <ng-container *ngIf="password.invalid && password.touched">
                 <p class="error" *ngIf="password.errors?.['required']">
                     Password is required
                 </p>

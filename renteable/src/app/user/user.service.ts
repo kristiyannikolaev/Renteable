@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, authState } from '@angular/fire/auth';
-import { from } from 'rxjs';
+import { from} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +8,7 @@ import { from } from 'rxjs';
 export class UserService {
 
   userData: any;
-  curentUser$ = authState(this.auth);
-
+  currentUser$ = authState(this.auth);
   constructor(private auth: Auth) { 
     authState(auth).subscribe((user) => {
       if(user) {

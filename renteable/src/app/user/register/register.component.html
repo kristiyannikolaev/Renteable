@@ -1,1 +1,35 @@
-<p>register works!</p>
+<div class="wrapper">
+    <div class="form-container">
+        <form #registerForm="ngForm" (ngSubmit)="submitForm(registerForm)">
+            <h1>Register</h1>
+            <div class="form-field">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required ngModel #name="ngModel" />
+                <i class="fa fa-user"></i>
+            </div>
+    
+            <div class="form-field">
+                <input type="text" class="form-control" id="email" name="email" placeholder="Email" required pattern="[a-z0-9]+@[a-z]+\.[a-z]{2,3}" ngModel #name="ngModel" />
+                <i class="fa fa-envelope"></i>
+            </div>
+    
+            <div class="form-field">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required minlength="5" ngModel #password="ngModel" />
+                <i class="fa fa-key"></i>
+            </div>
+    
+            <div class="form-field">
+                <input type="password" class="form-control" id="rePass" name="rePass" placeholder="Confirm Password" required minlength="5" ngModel #rePass="ngModel"/>
+                <i class="fa fa-key"></i>
+            </div>
+    
+            <div class="submit-btn">
+                <button type="submit" [disabled]="registerForm.invalid">Register</button>
+            </div>
+    
+            <div class="login-link">
+                <p>Already have an account? <a routerLink="/user/login">Log in!</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+

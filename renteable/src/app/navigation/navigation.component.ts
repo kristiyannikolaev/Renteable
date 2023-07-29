@@ -59,7 +59,7 @@ export class NavigationComponent implements OnInit{
   user$: Observable<unknown>;
 
   constructor(private userService: UserService, private router: Router) {
-    this.user$ = this.userService.curentUser$;
+    this.user$ = this.userService.currentUser$;
   }
 
   ngOnInit(): void {
