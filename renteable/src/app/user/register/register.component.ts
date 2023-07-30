@@ -8,6 +8,16 @@ import { NgForm } from '@angular/forms';
 })
 export class RegisterComponent {
 
+  passMatchError: string = '';
 
-  submitForm(form: NgForm) {}
+  submitForm(form: NgForm) {
+    if(form.invalid) return;
+
+    const { name, email, password, rePass } = form.value;
+
+    if(password !== rePass) {
+      this.passMatchError = 'Passwords don\'t match';
+      form.reset();
+    }
+  }
 }
