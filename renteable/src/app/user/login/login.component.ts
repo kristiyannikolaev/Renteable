@@ -18,11 +18,11 @@ export class LoginComponent {
   submitForm(form: NgForm) {
     if(!form.valid) return;
 
-    form.reset();
-
     const { email, password } = form.value;
     this.userService.login(email, password).subscribe(() => {
       this.router.navigate(['/user/register']);
-    })
+    });
+
+    form.reset();
   }
 }
