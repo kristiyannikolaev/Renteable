@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -11,8 +12,10 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
 
   passMatchError: string = '';
+  user$ = this.userService.currentUser$;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router, private http: HttpClient) {}
+
 
   submitForm(form: NgForm) {
     if(form.invalid) return;

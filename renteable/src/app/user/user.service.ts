@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, authState, createUserWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
-import { from, switchMap} from 'rxjs';
+import * as auth from 'firebase/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { from, Observable, switchMap} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+import { firebaseUrl } from '../constants';
+import { UserInterface } from '../interfaces/User';
 
 @Injectable({
   providedIn: 'root'
@@ -8,29 +13,31 @@ import { from, switchMap} from 'rxjs';
 export class UserService {
 
   userData: any;
-  currentUser$ = authState(this.auth);
-  constructor(private auth: Auth) { 
-    authState(auth).subscribe((user) => {
+  currentUser$ = this.afAuth.authState;
+
+  constructor(private afAuth: AngularFireAuth, private http: HttpClient,) { 
+    afAuth.authState.subscribe((user) => {
       if(user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
       } else {
         localStorage.removeItem('user');
     }
-    })
+    });
   }
 
   login(email: string, password: string) {
-    return from(signInWithEmailAndPassword(this.auth,email, password))
+    return from(this.afAuth.signInWithEmailAndPassword(email, password));
   }
 
   register(name: string, email: string, password: string) {
-    return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
-      switchMap(({ user }) => updateProfile(user, { displayName: name}))
-    )
+    return from(this.afAuth.createUserWithEmailAndPassword(email, password).then((res) => {
+      res.user?.updateProfile({displayName: name });
+    }))
   }
   
   logout() {
-    return from(this.auth.signOut());
+    return from(this.afAuth.signOut());
   }
+
 }
