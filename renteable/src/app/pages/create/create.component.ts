@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { OffersService } from '../offers.service';
 
 @Component({
   selector: 'app-create',
@@ -8,7 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class CreateComponent {
 
-  constructor( private fb: FormBuilder) {}
+  constructor( private fb: FormBuilder, private offersService: OffersService) {}
 
   createForm = this.fb.group({
     name: ['', [Validators.required]],
@@ -18,6 +19,15 @@ export class CreateComponent {
     description: ['', [Validators.required]]
   });
 
-  createOffer() {}
+  submit() {
+    try{
+      const { name, imageUrl, location, price, description } = this.createForm.value;
+      this.offersService.createOffer({name, imageUrl, location, pricePerDay: Number(price), description});
+    } catch(err) {
+      this.createForm.reset();
+      console.error();
+    }
+    
+  }
 
 }
