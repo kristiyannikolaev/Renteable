@@ -5,6 +5,11 @@ export const navbarDataLoggedIn = [
         label: 'Home'
     },
     {
+        routerLink: 'offers/create',
+        icon: 'fa fa-plus',
+        label: 'Create offer'
+    },
+    {
         routerLink: 'user/profile',
         icon: 'fa fa-user',
         label: 'Profile'

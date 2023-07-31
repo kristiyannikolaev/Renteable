@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from './navigation/navigation.component';
 import { BodyComponent } from './body/body.component';
 import { UserModule } from './user/user.module';
+import { PagesModule } from './pages/pages.module';
 import { environment } from 'src/environments/environment.development';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { environment } from 'src/environments/environment.development';
     AppRoutingModule,
     BrowserAnimationsModule,
     UserModule,
+    PagesModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
