@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { OffersService } from '../offers.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -9,7 +10,7 @@ import { OffersService } from '../offers.service';
 })
 export class CreateComponent {
 
-  constructor( private fb: FormBuilder, private offersService: OffersService) {}
+  constructor( private fb: FormBuilder, private offersService: OffersService, private router: Router) {}
 
   createForm = this.fb.group({
     name: ['', [Validators.required]],
@@ -22,7 +23,10 @@ export class CreateComponent {
   submit() {
     try{
       const { name, imageUrl, location, price, description } = this.createForm.value;
+      this.createForm.reset();
       this.offersService.createOffer({name, imageUrl, location, pricePerDay: Number(price), description});
+      this.router.navigate(['/home']);
+      
     } catch(err) {
       this.createForm.reset();
       console.error();

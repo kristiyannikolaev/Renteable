@@ -4,12 +4,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CreateComponent } from './create/create.component';
 import { PagesRoutingModule } from './pages-routing.module';
+import { HomeComponent } from './home/home.component';
 
 
 
 @NgModule({
   declarations: [
-    CreateComponent
+    CreateComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,

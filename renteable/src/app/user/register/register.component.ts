@@ -28,7 +28,7 @@ export class RegisterComponent {
     }
 
     this.userService.register(name, email, password).subscribe(() => {
-      this.router.navigate(['/user/profile']);
+      this.router.navigate(['/home']);
     })
   }
 }
