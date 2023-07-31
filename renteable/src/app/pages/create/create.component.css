@@ -35,7 +35,7 @@
     max-width: 99%;
     min-width: 99%;
     min-height: 50px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     padding: 20px 45px 3px 20px;
 }
 
@@ -58,8 +58,19 @@
     font-weight: 300;
 }
 
+.error {
+    margin-top: 10x;
+    color: #ff0000;
+    font-size: 12px;
+    font-weight: 400;
+}
+
 input.ng-invalid.ng-touched {
     border: 3px solid #ff0000;
+}
+
+textarea.ng-invalid.ng-touched {
+    border: 3px solid #ff0000;;
 }
 
 h1 {
