@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { from, Observable, switchMap} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-
-import { firebaseUrl } from '../constants';
-import { UserInterface } from '../interfaces/User';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +10,7 @@ export class UserService {
   userData: any;
   currentUser$ = this.afAuth.authState;
 
-  constructor(private afAuth: AngularFireAuth, private http: HttpClient,) { 
+  constructor(private afAuth: AngularFireAuth) { 
     afAuth.authState.subscribe((user) => {
       if(user) {
         this.userData = user;
