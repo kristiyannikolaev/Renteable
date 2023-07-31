@@ -1,1 +1,30 @@
-<p>create works!</p>
+<div class="form-container">
+    <form [formGroup]="createForm" (ngSubmit)="createOffer">
+
+        <h1>Add Offer</h1>
+        <div class="form-field">
+            <input type="text" name="name" id="name" placeholder="Name" formControlName="name">
+        </div>
+
+        <div class="form-field">
+            <input type="text" name="imageUrl" id="imageUrl" placeholder="Image Url" formControlName="imageUrl">
+        </div>
+
+        <div class="form-field">
+            <input type="text" name="location" id="location" placeholder="Location" formControlName="location">
+        </div>
+
+        <div class="form-field">
+            <input type="text" name="price" id="price" placeholder="Price Per Day" formControlName="price">
+        </div>
+
+        <div class="form-field">
+            <textarea type="text" name="description" id="description" placeholder="Description" formControlNamedescription ></textarea>
+        </div>
+
+        <div class="submit-btn">
+            <button type="submit" [disabled]="createForm.invalid">Create Offer</button>
+        </div>
+
+    </form>
+</div>
