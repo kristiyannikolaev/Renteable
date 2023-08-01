@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { firebaseUrl } from '../constants'; 
 import { UserService } from '../user/user.service';
@@ -20,6 +21,8 @@ export class OffersService {
     });
   }
 
+  
+
   createOffer(offerData: Offer) {
     offerData = {
       ...offerData,
@@ -39,5 +42,10 @@ export class OffersService {
 
       this.http.put( `${firebaseUrl}/offers/${id}.json`, offerData).subscribe();
     });
+  }
+
+  getAllOffers(): Observable<Offer[]> {
+    this.url = `${firebaseUrl}/offers.json`;
+    return this.http.get<Offer[]>(this.url);
   }
 }
