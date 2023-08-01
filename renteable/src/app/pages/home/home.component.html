@@ -1,1 +1,24 @@
-<p>home works!</p>
+<!-- <section id="catalog">
+    <div *ngFor="let offer of offers">
+        <app-product-card [offer]="offer" />
+    </div>
+</section> -->
+
+<section id="catalog">
+    <h2>Rent offers</h2>
+    <ul class="card-wrapper">
+        <ng-container *ngFor="let offer of offers">
+            <li class="card">
+                <span class="category">Catogriqta</span>
+                <img src="{{ offer.imageUrl }}" alt="">
+                
+                <p class="name">{{ offer.name}} </p>
+                
+                <p>
+                    <span class="value">{{ offer.pricePerDay | currency}}/day</span>
+                </p>
+                <a href="" class="details-btn">Details</a>
+            </li>
+        </ng-container>
+    </ul>
+</section>
