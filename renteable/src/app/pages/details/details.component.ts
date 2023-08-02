@@ -16,7 +16,7 @@ export class DetailsComponent {
 
   offer: Offer;
   private offerSubscription$: Subscription;
-  user$: Observable<unknown>;
+  user$: Observable<any>;
 
   constructor(private offersService: OffersService, private activatedRouted: ActivatedRoute, private userService: UserService) {}
 
