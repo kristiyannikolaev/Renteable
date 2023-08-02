@@ -17,7 +17,7 @@
                 <p>
                     <span class="value">{{ offer.pricePerDay | currency}}/day</span>
                 </p>
-                <a href="" class="details-btn">Details</a>
+                <a routerLink="/offers/{{offer._id}}/details" class="details-btn">Details</a>
             </li>
         </ng-container>
     </ul>
