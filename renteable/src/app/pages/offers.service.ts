@@ -21,8 +21,6 @@ export class OffersService {
     });
   }
 
-  
-
   createOffer(offerData: Offer) {
     offerData = {
       ...offerData,
@@ -47,5 +45,10 @@ export class OffersService {
   getAllOffers(): Observable<Offer[]> {
     this.url = `${firebaseUrl}/offers.json`;
     return this.http.get<Offer[]>(this.url);
+  }
+
+  getOfferById(id: string) {
+    this.url = `${firebaseUrl}/offers/${id}.json`;
+    return this.http.get<Offer>(this.url);
   }
 }
