@@ -57,7 +57,11 @@ export class OffersService {
       ownerId: this.user?.uid,
       _id: id
     }
-    
+
     return this.http.put(`${firebaseUrl}/offers/${id}.json`, offerData)
+  }
+
+  deleteOffer(id: string) {
+    return this.http.delete(`${firebaseUrl}/offers/${id}.json`);
   }
 }
