@@ -6,6 +6,7 @@ import { CreateComponent } from './create/create.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { HomeComponent } from './home/home.component';
 import { DetailsComponent } from './details/details.component';
+import { EditComponent } from './edit/edit.component';
 
 
 
@@ -13,7 +14,8 @@ import { DetailsComponent } from './details/details.component';
   declarations: [
     CreateComponent,
     HomeComponent,
-    DetailsComponent
+    DetailsComponent,
+    EditComponent
   ],
   imports: [
     CommonModule,

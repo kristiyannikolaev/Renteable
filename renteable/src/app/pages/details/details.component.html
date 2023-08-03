@@ -11,7 +11,7 @@
 
 <ng-container *ngIf="user$ | async as user">
     <div *ngIf="user.uid === offer.ownerId">
-        <button>Edit</button>
+        <button routerLink="/offers/{{ offer._id }}/edit">Edit</button>
         <button>Delete</button>
     </div>
     <div *ngIf="user.uid !== offer.ownerId">

@@ -3,7 +3,6 @@ import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 import { UserService } from 'src/app/user/user.service';
-import { UserInterface } from 'src/app/interfaces/User';
 import { Offer } from 'src/app/interfaces/Offer';
 import { OffersService } from '../offers.service';
 
