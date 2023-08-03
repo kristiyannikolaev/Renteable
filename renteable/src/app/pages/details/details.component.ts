@@ -36,6 +36,10 @@ export class DetailsComponent {
     })
   }
 
+  onSubmitRequest() {
+    this.offersService.submitOfferRequest(this.id);
+  }
+
   ngOnDestroy() {
     this.offerSubscription$.unsubscribe();
   }

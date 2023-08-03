@@ -6,5 +6,6 @@ export interface Offer {
     pricePerDay: number | null | undefined,
     imageUrl: string | null | undefined,
     location: string | null | undefined,
-    ownerId?: string
+    ownerId?: string,
+    requestedBy?: string[]
 }

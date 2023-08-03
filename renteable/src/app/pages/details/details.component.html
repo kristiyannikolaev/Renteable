@@ -15,6 +15,6 @@
         <button (click)="onDelete()">Delete</button>
     </div>
     <div *ngIf="user.uid !== offer.ownerId">
-        <button>Submit request</button>
+        <button (click)="onSubmitRequest()">Submit request</button>
     </div>    
 </ng-container>

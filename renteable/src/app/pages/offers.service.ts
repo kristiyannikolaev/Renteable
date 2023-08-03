@@ -13,6 +13,7 @@ export class OffersService {
 
   user: any;
   url: string;
+  requestedByArr: string[] = [];
 
   constructor(private http: HttpClient, private userService: UserService) { 
     userService.currentUser$.subscribe((user) => {
@@ -23,6 +24,7 @@ export class OffersService {
   createOffer(offerData: Offer) {
     offerData = {
       ...offerData,
+      requestedBy: [],
       ownerId: this.user?.uid
     }
 
@@ -59,6 +61,26 @@ export class OffersService {
     }
 
     return this.http.put(`${firebaseUrl}/offers/${id}.json`, offerData)
+  }
+
+  submitOfferRequest(id: string) {
+    
+    this.url = `${firebaseUrl}/offers/${id}/requestedBy.json`
+
+    return this.getRequestedByArray(this.url).subscribe((res) => {
+      if(res) {
+        this.requestedByArr = Object.values(res);
+      } else {
+        this.requestedByArr = [];
+      }
+
+      this.requestedByArr.push(this.user.uid);
+      return this.http.put(this.url, this.requestedByArr).subscribe();
+    });
+  }
+
+  getRequestedByArray(url: string) {
+    return this.http.get(url);
   }
 
   deleteOffer(id: string) {
