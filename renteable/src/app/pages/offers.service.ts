@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 import { firebaseUrl } from '../constants'; 
 import { UserService } from '../user/user.service';
-import { UserInterface } from '../interfaces/User';
 import { Offer } from '../interfaces/Offer';
 
 @Injectable({
@@ -37,8 +36,8 @@ export class OffersService {
         ...offerData,
         _id: id
       };
-
-      this.http.put( `${firebaseUrl}/offers/${id}.json`, offerData).subscribe();
+      
+      this.updateOffer(id, offerData).subscribe();
     });
   }
 
@@ -50,5 +49,15 @@ export class OffersService {
   getOfferById(id: string) {
     this.url = `${firebaseUrl}/offers/${id}.json`;
     return this.http.get<Offer>(this.url);
+  }
+
+  updateOffer(id: string, offerData: Offer) {
+    offerData = {
+      ...offerData,
+      ownerId: this.user?.uid,
+      _id: id
+    }
+    
+    return this.http.put(`${firebaseUrl}/offers/${id}.json`, offerData)
   }
 }

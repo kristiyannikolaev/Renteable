@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -18,8 +18,9 @@ export class EditComponent implements OnInit, OnDestroy {
   offer: Offer;
   offerSubscription$: Subscription;
   categories: string[] = categoryOptions;
+  id: string
 
-  constructor(private offersService: OffersService, private activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(private offersService: OffersService, private activatedRoute: ActivatedRoute, private fb: FormBuilder, private router: Router) {}
 
   editForm = this.fb.group({
     name: ['', [Validators.required]],
@@ -32,9 +33,9 @@ export class EditComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    const id = this.activatedRoute.snapshot.params['id'];
+    this.id = this.activatedRoute.snapshot.params['id'];
 
-    this.offerSubscription$ = this.offersService.getOfferById(id).subscribe((fetchedOffer) => {
+    this.offerSubscription$ = this.offersService.getOfferById(this.id).subscribe((fetchedOffer) => {
       this.editForm.patchValue({
         name: fetchedOffer.name,
         imageUrl: fetchedOffer.imageUrl,
@@ -43,17 +44,18 @@ export class EditComponent implements OnInit, OnDestroy {
         price: fetchedOffer.pricePerDay?.toString(),
         description: fetchedOffer.description
       });
-
-      console.log(fetchedOffer.category);
     });
   }
 
   onUpdate(){
-    console.log('form submited');
+    const { name, imageUrl, category, location, price, description } = this.editForm.value;
+    this.offersService.updateOffer(this.id, {name, imageUrl, category, location, pricePerDay: Number(price), description}).subscribe(() => {
+      this.router.navigate([`/offers/${this.id}/details`]);
+    });
   }
 
   onCancel() {
-    console.log('Submission canceled');
+    this.router.navigate([`/offers/${this.id}/details`]);
   }
 
   ngOnDestroy() {
