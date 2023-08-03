@@ -10,6 +10,11 @@ export const navbarDataLoggedIn = [
         label: 'Create offer'
     },
     {
+        routerLink: 'offers/requested',
+        icon: 'fa fa-clock-o',
+        label: 'Requested offers'
+    },
+    {
         routerLink: 'user/profile',
         icon: 'fa fa-user',
         label: 'Profile'

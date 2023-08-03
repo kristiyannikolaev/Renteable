@@ -67,7 +67,7 @@ export class OffersService {
     
     this.url = `${firebaseUrl}/offers/${id}/requestedBy.json`
 
-    return this.getRequestedByArray(this.url).subscribe((res) => {
+    this.getRequestedByArray(this.url).subscribe((res) => {
       if(res) {
         this.requestedByArr = Object.values(res);
       } else {
@@ -75,7 +75,7 @@ export class OffersService {
       }
 
       this.requestedByArr.push(this.user.uid);
-      return this.http.put(this.url, this.requestedByArr).subscribe();
+      this.http.put(this.url, this.requestedByArr).subscribe();
     });
   }
 

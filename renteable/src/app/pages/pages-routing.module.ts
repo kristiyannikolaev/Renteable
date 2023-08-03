@@ -4,6 +4,7 @@ import { CreateComponent } from './create/create.component';
 import { HomeComponent } from './home/home.component';
 import { DetailsComponent } from './details/details.component';
 import { EditComponent } from './edit/edit.component';
+import { RequestedOffersComponent } from './requested-offers/requested-offers.component';
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -11,7 +12,8 @@ const routes: Routes = [
     { path: 'offers', children: [
         {path: 'create', component: CreateComponent},
         {path: ':id/details', component: DetailsComponent},
-        {path: ':id/edit', component: EditComponent}
+        {path: ':id/edit', component: EditComponent},
+        {path: 'requested', component: RequestedOffersComponent}
     ]},
 ] 
 

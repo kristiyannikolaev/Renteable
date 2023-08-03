@@ -7,6 +7,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { HomeComponent } from './home/home.component';
 import { DetailsComponent } from './details/details.component';
 import { EditComponent } from './edit/edit.component';
+import { RequestedOffersComponent } from './requested-offers/requested-offers.component';
 
 
 
@@ -15,7 +16,8 @@ import { EditComponent } from './edit/edit.component';
     CreateComponent,
     HomeComponent,
     DetailsComponent,
-    EditComponent
+    EditComponent,
+    RequestedOffersComponent
   ],
   imports: [
     CommonModule,
