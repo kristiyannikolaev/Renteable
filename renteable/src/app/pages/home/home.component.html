@@ -9,7 +9,7 @@
     <ul class="card-wrapper">
         <ng-container *ngFor="let offer of offers">
             <li class="card">
-                <span class="category">Catogriqta</span>
+                <span class="category">{{ offer.category}}</span>
                 <img src="{{ offer.imageUrl }}" alt="">
                 
                 <p class="name">{{ offer.name}} </p>

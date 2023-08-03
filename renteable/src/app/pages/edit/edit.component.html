@@ -1,1 +1,76 @@
-<p>edit works!</p>
+<div class="form-container">
+    <form [formGroup]="editForm">
+        <h1>Edit Offer</h1>
+        <div class="form-field">
+            <input type="text" name="name"[value]="" id="name" placeholder="Name" formControlName="name">
+        </div>
+
+        <ng-container *ngIf="editForm.get('name')?.touched">
+            <p class="error" *ngIf="editForm.get('name')?.errors?.['required']">
+                Name is required
+            </p>
+        </ng-container>
+
+        <div class="form-field">
+            <input type="text" name="imageUrl" id="imageUrl" placeholder="Image URL" formControlName="imageUrl">
+        </div>
+
+        <ng-container *ngIf="editForm.get('imageUrl')?.touched">
+            <p class="error" *ngIf="editForm.get('imageUrl')?.errors?.['required']">
+                Image URL is required!
+            </p>
+        </ng-container>
+
+        <div class="form-field">
+            <select formControlName="category">
+                <option value="" disabled selected>Select category</option>
+                <option *ngFor="let category of categories" value="{{ category }}">{{ category }}</option>
+            </select>
+        </div>
+
+        <ng-container *ngIf="editForm.get('category')?.touched">
+            <p class="error" *ngIf="editForm.get('category')?.errors?.['required']">
+                Please select a category!
+            </p>
+        </ng-container>
+
+        <div class="form-field">
+            <input type="text" name="location" id="location" placeholder="Location" formControlName="location">
+        </div>
+
+        <ng-container *ngIf="editForm.get('location')?.touched">
+            <p class="error" *ngIf="editForm.get('location')?.errors?.['required']">
+                Location is required!
+            </p>
+        </ng-container>
+
+        <div class="form-field">
+            <input type="text" name="price" id="price" placeholder="Price Per Day" formControlName="price">
+        </div>
+
+        <ng-container *ngIf="editForm.get('price')?.touched">
+            <p class="error" *ngIf="editForm.get('price')?.errors?.['required']">
+                Price is required!
+            </p>
+            <p class="error" *ngIf="editForm.get('price')?.errors?.['pattern']">
+                Price must be a positive number
+            </p>
+        </ng-container>
+
+        <div class="form-field">
+            <textarea type="text" name="description" id="description" placeholder="Description" formControlName="description" ></textarea>
+        </div>
+
+        <ng-container *ngIf="editForm.get('description')?.touched">
+            <br>
+            <p class="error" *ngIf="editForm.get('description')?.errors?.['required']">
+                Description is required!
+            </p>
+        </ng-container>
+
+        <div class="action-btns">
+            <button class="submit-btn" (click)="onUpdate()" [disabled]="editForm.invalid">Update</button>
+            <button class="cancel-btn" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+</div>

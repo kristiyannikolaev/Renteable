@@ -23,6 +23,19 @@
         </ng-container>
 
         <div class="form-field">
+            <select formControlName="category">
+                <option value="" disabled selected >Select category</option>
+                <option *ngFor="let category of categories" value="{{ category }}">{{ category }}</option>
+            </select>
+        </div>
+
+        <ng-container *ngIf="createForm.get('category')?.touched">
+            <p class="error" *ngIf="createForm.get('category')?.errors?.['required']">
+                Please select a category!
+            </p>
+        </ng-container>
+
+        <div class="form-field">
             <input type="text" name="location" id="location" placeholder="Location" formControlName="location">
         </div>
 
@@ -39,6 +52,9 @@
         <ng-container *ngIf="createForm.get('price')?.touched">
             <p class="error" *ngIf="createForm.get('price')?.errors?.['required']">
                 Price is required!
+            </p>
+            <p class="error" *ngIf="createForm.get('price')?.errors?.['pattern']">
+                Price must be a positive number
             </p>
         </ng-container>
 
