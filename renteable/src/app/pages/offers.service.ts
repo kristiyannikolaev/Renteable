@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 
 import { firebaseUrl } from '../constants'; 
 import { UserService } from '../user/user.service';
@@ -21,26 +21,28 @@ export class OffersService {
     });
   }
 
-  createOffer(offerData: Offer) {
+  createOffer(offerData: Offer): Observable<any> {
     offerData = {
       ...offerData,
       requestedBy: [],
-      ownerId: this.user?.uid
-    }
-
-    let id = '';
+      ownerId: this.user?.uid,
+    };
 
     this.url = `${firebaseUrl}/offers.json`;
 
-    this.http.post(this.url, offerData).subscribe((res) => {
-      id = Object.values(res)[0];
-      offerData = {
-        ...offerData,
-        _id: id
-      };
-      
-      this.updateOffer(id, offerData).subscribe();
-    });
+    return this.http.post(this.url, offerData).pipe(
+      switchMap((res) => {
+        const id = Object.values(res)[0];
+        const updatedOfferData = {
+          ...offerData,
+          _id: id
+        };
+
+        this.url = `${firebaseUrl}/offers/${id}/.json`
+
+        return this.updateOffer(this.url, updatedOfferData);
+      })
+    )
   }
 
   getAllOffers(): Observable<Offer[]> {
@@ -53,30 +55,27 @@ export class OffersService {
     return this.http.get<Offer>(this.url);
   }
 
-  updateOffer(id: string, offerData: Offer) {
-    offerData = {
-      ...offerData,
-      ownerId: this.user?.uid,
-      _id: id
-    }
+  updateOffer(url: string, offerData: Offer  | string[]) {
+    // offerData = {
+    //   ...offerData,
+    //   ownerId: this.user?.uid,
+    //   _id: id
+    // }
 
-    return this.http.put(`${firebaseUrl}/offers/${id}.json`, offerData)
+    return this.http.put(url, offerData)
   }
 
-  submitOfferRequest(id: string) {
-    
-    this.url = `${firebaseUrl}/offers/${id}/requestedBy.json`
+  submitOfferRequest(id: string): Observable<any> {
+    this.url = `${firebaseUrl}/offers/${id}/requestedBy.json`;
 
-    this.getRequestedByArray(this.url).subscribe((res) => {
-      if(res) {
-        this.requestedByArr = Object.values(res);
-      } else {
-        this.requestedByArr = [];
-      }
+    return  this.getRequestedByArray(this.url).pipe(
+      switchMap((res: any) => {
+        this.requestedByArr = res ? Object.values(res) : [];
+        this.requestedByArr.push(this.user.uid);
 
-      this.requestedByArr.push(this.user.uid);
-      this.http.put(this.url, this.requestedByArr).subscribe();
-    });
+        return this.updateOffer(this.url, this.requestedByArr)
+      })
+    )
   }
 
   getRequestedByArray(url: string) {

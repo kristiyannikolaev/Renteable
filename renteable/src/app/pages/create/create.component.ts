@@ -26,17 +26,19 @@ export class CreateComponent {
   });
 
   submit() {
-    try{
       const { name, imageUrl, category, location, price, description } = this.createForm.value;
-      this.createForm.reset();
-      this.offersService.createOffer({name, imageUrl, category, location, pricePerDay: Number(price), description});
-      this.router.navigate(['/home']);
-      
-    } catch(err) {
-      this.createForm.reset();
-      console.error();
-    }
-    
+
+      this.offersService.createOffer({name, imageUrl, category, location, pricePerDay: Number(price), description})
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/home']);
+            this.createForm.reset();
+          },
+          error: (err) => {
+            this.createForm.reset();
+            console.error(err);
+          }
+        });
   }
 
 }
