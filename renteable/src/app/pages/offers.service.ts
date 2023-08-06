@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 
 import { firebaseUrl } from '../constants'; 
 import { UserService } from '../user/user.service';
@@ -74,6 +74,16 @@ export class OffersService {
         this.requestedByArr.push(this.user.uid);
 
         return this.updateOffer(this.url, this.requestedByArr)
+      })
+    )
+  }
+
+  checkIfSubmitted(id: string) {
+    this.url = `${firebaseUrl}/offers/${id}/requestedBy.json`;
+    
+    return this.http.get(this.url).pipe(
+      map((res: any) => {
+        return Object.values(res).includes(this.user.uid);
       })
     )
   }

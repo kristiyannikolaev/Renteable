@@ -14,9 +14,11 @@ import { OffersService } from '../offers.service';
 export class DetailsComponent {
 
   offer: Offer;
-  private offerSubscription$: Subscription;
+  offerSubscription$: Subscription;
   user$: Observable<any>;
+  userSubscription$: Subscription;
   id: string;
+  alreadySubmitted: boolean = false;
 
   constructor(private offersService: OffersService, private activatedRouted: ActivatedRoute, private userService: UserService, private router: Router) {}
 
@@ -28,6 +30,10 @@ export class DetailsComponent {
     });
 
     this.user$ = this.userService.currentUser$;
+
+    this.offersService.checkIfSubmitted(this.id).subscribe((res) => {
+      this.alreadySubmitted = res;
+    });
   }
 
   onDelete() {
@@ -36,12 +42,17 @@ export class DetailsComponent {
     })
   }
 
+  checkIfSubmitted() {
+    console.log(this.offersService.user.uid);
+  }
+
   onSubmitRequest() {
-    this.offersService.submitOfferRequest(this.id);
+    this.offersService.submitOfferRequest(this.id).subscribe({
+      error: (err) => console.error(err.message)
+    })
   }
 
   ngOnDestroy() {
     this.offerSubscription$.unsubscribe();
   }
-
 }

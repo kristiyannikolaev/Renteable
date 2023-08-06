@@ -9,12 +9,13 @@
     <p>{{ offer.ownerId }}</p>
 </div>
 
-<ng-container *ngIf="user$ | async as user">
+<ng-container *ngIf="(user$ | async) as user">
     <div *ngIf="user.uid === offer.ownerId">
         <button routerLink="/offers/{{ offer._id }}/edit">Edit</button>
         <button (click)="onDelete()">Delete</button>
     </div>
     <div *ngIf="user.uid !== offer.ownerId">
-        <button (click)="onSubmitRequest()">Submit request</button>
+        <button *ngIf="!alreadySubmitted" (click)="onSubmitRequest()">Submit request</button>
+        <p *ngIf="alreadySubmitted">You have already submitted request for this offer</p>
     </div>    
 </ng-container>
