@@ -1,1 +1,7 @@
-<p>requested-offers works!</p>
+<ng-container *ngFor="let offer of requestedOffers">
+    <div>{{ offer.imageUrl }}</div>
+    <div>{{ offer.name }}</div>
+    <div>Uploaded by: {{ offer.ownerId }}</div>
+    <div>Calculated price: </div>
+    <div>Waiting for approval....</div>
+</ng-container>

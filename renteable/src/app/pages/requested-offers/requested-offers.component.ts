@@ -19,7 +19,6 @@ export class RequestedOffersComponent implements OnInit{
   ngOnInit(): void {
     this.requestedOffersSubscription$ = this.offersService.getAllOffers().subscribe((offers) => {
       this.requestedOffers = Object.values(offers).filter((x) => x.requestedBy?.includes(this.offersService.user?.uid));
-      console.log(this.requestedOffers);
     });
   }
 
