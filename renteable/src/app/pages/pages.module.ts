@@ -20,15 +20,15 @@ import { RequestedOffersComponent } from './requested-offers/requested-offers.co
     HomeComponent,
     DetailsComponent,
     EditComponent,
-    RequestedOffersComponent,
+    RequestedOffersComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     PagesRoutingModule,
-    MatNativeDateModule,
+    MatDatepickerModule,
     MatFormFieldModule,
-    MatDatepickerModule
+    MatNativeDateModule
   ]
 })
 export class PagesModule { }

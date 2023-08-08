@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, min } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UserService } from 'src/app/user/user.service';
 import { Offer } from 'src/app/interfaces/Offer';
 import { OffersService } from '../offers.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-details',
@@ -20,9 +21,8 @@ export class DetailsComponent {
   id: string;
   alreadySubmitted: boolean = false;
   minDate: Date;
-  maxDate: Date;
 
-  constructor(private offersService: OffersService, private activatedRouted: ActivatedRoute, private userService: UserService, private router: Router) {
+  constructor(private offersService: OffersService, private activatedRouted: ActivatedRoute, private userService: UserService, private router: Router, private fb: FormBuilder) {
     this.minDate = new Date();
   }
 
@@ -40,16 +40,25 @@ export class DetailsComponent {
     });
   }
 
+  dateRange = this.fb.group({
+    start: [Validators.required],
+    end: [Validators.required]
+  })
+
   onDelete() {
     this.offersService.deleteOffer(this.id).subscribe(() => {
       this.router.navigate(['/home']);
     })
   }
 
+  checkIfSubmitted() {
+    console.log(this.offersService.user.uid);
+  }
+
   onSubmitRequest() {
     this.offersService.submitOfferRequest(this.id).subscribe({
       error: (err) => console.error(err.message)
-    })
+    });
   }
 
   ngOnDestroy() {
