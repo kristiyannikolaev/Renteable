@@ -21,6 +21,7 @@ export class DetailsComponent {
   id: string;
   alreadySubmitted: boolean = false;
   minDate: Date;
+  dateErrMessage: string = '';
 
   constructor(private offersService: OffersService, private activatedRouted: ActivatedRoute, private userService: UserService, private router: Router, private fb: FormBuilder) {
     this.minDate = new Date();
@@ -41,8 +42,8 @@ export class DetailsComponent {
   }
 
   dateRange = this.fb.group({
-    start: [Validators.required],
-    end: [Validators.required]
+    start: ['', [Validators.required]],
+    end: ['', [Validators.required]]
   })
 
   onDelete() {
@@ -56,9 +57,23 @@ export class DetailsComponent {
   }
 
   onSubmitRequest() {
-    this.offersService.submitOfferRequest(this.id).subscribe({
-      error: (err) => console.error(err.message)
-    });
+    const { start, end } = this.dateRange.value;
+
+    if(!start || !end) {
+      this.dateErrMessage = 'Please select dates for the rent';
+      return;
+    }
+    const startDate = new Date(start!);
+    const endDate = new Date(end!);
+    
+    const difference = endDate.getTime() - startDate.getTime();
+    const rentDuration = difference / (1000 * 3600 * 24);
+
+    console.log(rentDuration);
+
+    // this.offersService.submitOfferRequest(this.id).subscribe({
+    //   error: (err) => console.error(err.message)
+    // });
   }
 
   ngOnDestroy() {

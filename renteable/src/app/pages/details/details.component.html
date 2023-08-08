@@ -16,7 +16,11 @@
         <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
-      </mat-form-field>
+    </mat-form-field>
+    <div *ngIf="dateErrMessage">
+        <p class="error">{{ dateErrMessage}}</p>
+    </div>
+    
 </div>
 
 <ng-container *ngIf="(user$ | async) as user">
