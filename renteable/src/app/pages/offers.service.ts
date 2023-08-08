@@ -12,12 +12,14 @@ import { Offer } from '../interfaces/Offer';
 export class OffersService {
 
   user: any;
+  userUid: string;
   url: string;
-  requestedByArr: string[] = [];
+  requestedByArr: any[] = [];
 
   constructor(private http: HttpClient, private userService: UserService) { 
     userService.currentUser$.subscribe((user) => {
-      this.user = user
+      this.user = user;
+      this.userUid = user!.uid;
     });
   }
 
@@ -65,13 +67,13 @@ export class OffersService {
     return this.http.put(url, offerData)
   }
 
-  submitOfferRequest(id: string): Observable<any> {
+  submitOfferRequest(id: string, startDate: Date, duration: number): Observable<any> {
     this.url = `${firebaseUrl}/offers/${id}/requestedBy.json`;
 
     return  this.getRequestedByArray(this.url).pipe(
       switchMap((res: any) => {
         this.requestedByArr = res ? Object.values(res) : [];
-        this.requestedByArr.push(this.user.uid);
+        this.requestedByArr.push(`${this.user.uid} - ${startDate} - ${duration}`);
 
         return this.updateOffer(this.url, this.requestedByArr)
       })
@@ -80,12 +82,15 @@ export class OffersService {
 
   checkIfSubmitted(id: string) {
     this.url = `${firebaseUrl}/offers/${id}/requestedBy.json`;
-    
+  
     return this.http.get(this.url).pipe(
-      map((res: any) => {
-        return Object.values(res).includes(this.user.uid);
+      map((res:any) => {
+        if (!res) {
+          return false;
+        }
+        return Object.values(res).some((request: any) => request.indexOf(this.user.uid) !== -1);
       })
-    )
+    );
   }
 
   getRequestedByArray(url: string) {

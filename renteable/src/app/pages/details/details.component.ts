@@ -19,7 +19,7 @@ export class DetailsComponent {
   user$: Observable<any>;
   userSubscription$: Subscription;
   id: string;
-  alreadySubmitted: boolean = false;
+  alreadySubmitted: unknown;
   minDate: Date;
   dateErrMessage: string = '';
 
@@ -52,10 +52,6 @@ export class DetailsComponent {
     })
   }
 
-  checkIfSubmitted() {
-    console.log(this.offersService.user.uid);
-  }
-
   onSubmitRequest() {
     const { start, end } = this.dateRange.value;
 
@@ -69,11 +65,9 @@ export class DetailsComponent {
     const difference = endDate.getTime() - startDate.getTime();
     const rentDuration = difference / (1000 * 3600 * 24);
 
-    console.log(rentDuration);
-
-    // this.offersService.submitOfferRequest(this.id).subscribe({
-    //   error: (err) => console.error(err.message)
-    // });
+    this.offersService.submitOfferRequest(this.id, startDate, rentDuration).subscribe({
+      error: (err) => console.error(err.message)
+    });
   }
 
   ngOnDestroy() {
