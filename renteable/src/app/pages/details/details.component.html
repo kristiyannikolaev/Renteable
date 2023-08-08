@@ -7,6 +7,16 @@
     <p>{{ offer.description }}</p>
     <p>{{ offer.pricePerDay }}</p>
     <p>{{ offer.ownerId }}</p>
+    <mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker" [min]="minDate">
+          <input matStartDate placeholder="Start date">
+          <input matEndDate placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
 </div>
 
 <ng-container *ngIf="(user$ | async) as user">

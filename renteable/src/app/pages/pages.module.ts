@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { CreateComponent } from './create/create.component';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -17,12 +20,15 @@ import { RequestedOffersComponent } from './requested-offers/requested-offers.co
     HomeComponent,
     DetailsComponent,
     EditComponent,
-    RequestedOffersComponent
+    RequestedOffersComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     PagesRoutingModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatDatepickerModule
   ]
 })
 export class PagesModule { }

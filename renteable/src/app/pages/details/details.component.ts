@@ -19,8 +19,12 @@ export class DetailsComponent {
   userSubscription$: Subscription;
   id: string;
   alreadySubmitted: boolean = false;
+  minDate: Date;
+  maxDate: Date;
 
-  constructor(private offersService: OffersService, private activatedRouted: ActivatedRoute, private userService: UserService, private router: Router) {}
+  constructor(private offersService: OffersService, private activatedRouted: ActivatedRoute, private userService: UserService, private router: Router) {
+    this.minDate = new Date();
+  }
 
   ngOnInit() {
     this.id = this.activatedRouted.snapshot.params['id'];
@@ -40,10 +44,6 @@ export class DetailsComponent {
     this.offersService.deleteOffer(this.id).subscribe(() => {
       this.router.navigate(['/home']);
     })
-  }
-
-  checkIfSubmitted() {
-    console.log(this.offersService.user.uid);
   }
 
   onSubmitRequest() {
