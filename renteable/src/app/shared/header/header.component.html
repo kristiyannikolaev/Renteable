@@ -1,0 +1,18 @@
+<header>
+    <div class="search-container">
+        <input type="text" [(ngModel)]="searchQuery" (keyup.enter)="search()" placeholder="Search" />
+        <button (click)="search()">Search</button>
+    </div>
+
+    <div class="title">
+        <h2>Rent offers</h2>
+    </div>
+    
+    <div class="filter-container">
+        <label for="category">Filter by Category</label>
+        <select id="category" [(ngModel)]="selectedCategory" (change)="filterByCategory()">
+            <option value="">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+    </div>
+</header>

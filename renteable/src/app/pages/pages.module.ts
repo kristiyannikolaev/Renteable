@@ -5,6 +5,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
+import { SharedModule } from '../shared/shared.module';
 import { CreateComponent } from './create/create.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { HomeComponent } from './home/home.component';
@@ -28,7 +29,8 @@ import { RequestedOffersComponent } from './requested-offers/requested-offers.co
     PagesRoutingModule,
     MatDatepickerModule,
     MatFormFieldModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    SharedModule
   ]
 })
 export class PagesModule { }

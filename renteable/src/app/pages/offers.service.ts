@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, switchMap } from 'rxjs';
+import { Observable, map, switchMap, BehaviorSubject } from 'rxjs';
 
 import { firebaseUrl } from '../constants'; 
 import { UserService } from '../user/user.service';
@@ -15,6 +15,8 @@ export class OffersService {
   userUid: string;
   url: string;
   requestedByArr: any[] = [];
+
+  offersSubject = new BehaviorSubject<any[]>([]);
 
   constructor(private http: HttpClient, private userService: UserService) { 
     userService.currentUser$.subscribe((user) => {
@@ -49,12 +51,38 @@ export class OffersService {
 
   getAllOffers(): Observable<Offer[]> {
     this.url = `${firebaseUrl}/offers.json`;
-    return this.http.get<Offer[]>(this.url);
+    return this.http.get<Offer[]>(this.url).pipe(
+      map(offers => {
+        const offersArr = Object.values(offers);
+        this.offersSubject.next(offersArr);
+        return offersArr;
+      })
+    )
   }
 
   getOfferById(id: string) {
     this.url = `${firebaseUrl}/offers/${id}.json`;
     return this.http.get<Offer>(this.url);
+  }
+
+  searchOffers(query: string) {
+    this.url = `${firebaseUrl}/offers.json`;
+    return this.http.get<Offer[]>(this.url).pipe(
+      map( offers => {
+        const filteredOffers = Object.values(offers).filter(offer => offer.name?.toLowerCase().includes(query.toLowerCase()));
+        this.offersSubject.next(filteredOffers);
+      })
+    )
+  }
+
+  filterByCategory(category: string) {
+    this.url = `${firebaseUrl}/offers.json`;
+    return this.http.get<Offer[]>(this.url).pipe(
+      map(offers => {
+        const filteredOffers = Object.values(offers).filter((offer) => !category || offer.category === category);
+        this.offersSubject.next(filteredOffers);
+      })
+    )
   }
 
   updateOffer(url: string, offerData: Offer  | string[]) {

@@ -15,6 +15,7 @@ import { BodyComponent } from './body/body.component';
 import { UserModule } from './user/user.module';
 import { PagesModule } from './pages/pages.module';
 import { environment } from 'src/environments/environment.development';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { environment } from 'src/environments/environment.development';
     BrowserAnimationsModule,
     UserModule,
     PagesModule,
+    SharedModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,

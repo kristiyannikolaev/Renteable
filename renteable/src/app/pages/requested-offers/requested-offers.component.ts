@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription, switchMap, map } from 'rxjs';
+import { Subscription, switchMap, map, Observable } from 'rxjs';
 
 import { OffersService } from '../offers.service';
 import { Offer } from 'src/app/interfaces/Offer';
@@ -12,7 +12,7 @@ import { UserService } from 'src/app/user/user.service';
 })
 export class RequestedOffersComponent implements OnInit{
 
-  requestedOffers: Offer[];
+  requestedOffers$: Observable<Offer[] | null>;
   requestedOffersSubscription$: Subscription;
   user: any;
   
@@ -26,12 +26,14 @@ export class RequestedOffersComponent implements OnInit{
         return this.offersService.getAllOffers();
       }),
       map((offers) => {
-        return Object.values(offers).filter((x) =>
+        const filteredOffers =  Object.values(offers).filter((x) =>
           x.requestedBy?.some((x) => x && x.includes(this.user.uid))
         );
+
+        this.offersService.offersSubject.next(filteredOffers);
       })
-    ).subscribe((filteredOffers) => {
-      this.requestedOffers = filteredOffers;
+    ).subscribe(() => {
+      this.requestedOffers$ = this.offersService.offersSubject.asObservable();
     });
   }
 

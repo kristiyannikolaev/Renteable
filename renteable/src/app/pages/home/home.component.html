@@ -3,10 +3,9 @@
         <app-product-card [offer]="offer" />
     </div>
 </section> -->
-
+<app-header></app-header>
 <section id="catalog">
-    <h2>Rent offers</h2>
-    <ul class="card-wrapper">
+    <ul *ngIf="offers$ | async as offers" class="card-wrapper">
         <ng-container *ngFor="let offer of offers">
             <li class="card">
                 <span class="category">{{ offer.category}}</span>
@@ -21,4 +20,7 @@
             </li>
         </ng-container>
     </ul>
+    <h2 *ngIf="!(offers$ | async)">
+        No uploaded offers yet.
+    </h2>
 </section>

@@ -1,7 +1,7 @@
 <section id="dashboard">
     <h2>Requested Offers</h2>
-    <h3 *ngIf="!requestedOffers">You haven't requested any offers yet.</h3>
-    <ng-container *ngIf="requestedOffers">
+    <h3 *ngIf="!requestedOffers$">You haven't requested any offers yet.</h3>
+    <ng-container *ngIf="requestedOffers$ | async as requestedOffers">
         <div class="offer" *ngFor="let offer of requestedOffers">
             <img src="{{ offer.imageUrl }}" alt="offerImg" />
             <p><strong>Name: </strong><span class="name">{{ offer.name }}</span></p>

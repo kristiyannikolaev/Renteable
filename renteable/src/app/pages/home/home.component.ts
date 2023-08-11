@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OffersService } from '../offers.service';
 import { Offer } from 'src/app/interfaces/Offer';
 
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,15 +10,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  offers: Offer[];
+  offers$: Observable<Offer[]>;
   offersSubscription$: Subscription | undefined;
 
   constructor(private offerService: OffersService) {}
 
   ngOnInit() {
-    this.offersSubscription$ = this.offerService.getAllOffers().subscribe((offers) => {
-      this.offers = Object.values(offers);
-    })
+    this.offerService.getAllOffers().subscribe(() => {
+      this.offers$ = this.offerService.offersSubject.asObservable();
+    });
   }
 
   ngOnDestroy(): void {
