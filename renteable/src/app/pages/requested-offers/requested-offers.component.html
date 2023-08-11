@@ -1,7 +1,11 @@
-<ng-container *ngFor="let offer of requestedOffers">
-    <div>{{ offer.imageUrl }}</div>
-    <div>{{ offer.name }}</div>
-    <div>Uploaded by: {{ offer.ownerId }}</div>
-    <div>Calculated price: </div>
-    <div>Waiting for approval....</div>
-</ng-container>
+<section id="dashboard">
+    <h2>Requested Offers</h2>
+    <h3 *ngIf="!requestedOffers">You haven't requested any offers yet.</h3>
+    <ng-container *ngIf="requestedOffers">
+        <div class="offer" *ngFor="let offer of requestedOffers">
+            <img src="{{ offer.imageUrl }}" alt="offerImg" />
+            <p><strong>Name: </strong><span class="name">{{ offer.name }}</span></p>
+            <p><strong>Price: </strong><span class="price">{{ offer.pricePerDay }}</span></p>
+        </div>
+    </ng-container>
+</section>
