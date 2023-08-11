@@ -15,9 +15,9 @@ export const navbarDataLoggedIn = [
         label: 'Requested offers'
     },
     {
-        routerLink: 'user/profile',
-        icon: 'fa fa-user',
-        label: 'Profile'
+        routerLink: 'offers/received-requests',
+        icon: 'fa fa-tags',
+        label: 'Received requests'
     },
 ]
 

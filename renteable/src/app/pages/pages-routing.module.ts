@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { DetailsComponent } from './details/details.component';
 import { EditComponent } from './edit/edit.component';
 import { RequestedOffersComponent } from './requested-offers/requested-offers.component';
+import { RecievedRequestsComponent } from './recieved-requests/recieved-requests.component';
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home'},
@@ -13,7 +14,8 @@ const routes: Routes = [
         {path: 'create', component: CreateComponent},
         {path: ':id/details', component: DetailsComponent},
         {path: ':id/edit', component: EditComponent},
-        {path: 'requested', component: RequestedOffersComponent}
+        {path: 'requested', component: RequestedOffersComponent},
+        {path: 'received-requests', component: RecievedRequestsComponent}
     ]},
 ] 
 

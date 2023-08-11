@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { from } from 'rxjs';
+import { from, map } from 'rxjs';
+
+import { firebaseUrl } from '../constants';
+import { UserInterface } from '../interfaces/User';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +14,7 @@ export class UserService {
   userData: any;
   currentUser$ = this.afAuth.authState;
 
-  constructor(private afAuth: AngularFireAuth) { 
+  constructor(private afAuth: AngularFireAuth, private http: HttpClient) { 
     afAuth.authState.subscribe((user) => {
       if(user) {
         this.userData = user;
@@ -27,12 +31,26 @@ export class UserService {
 
   register(name: string, email: string, password: string) {
     return from(this.afAuth.createUserWithEmailAndPassword(email, password).then((res) => {
-      res.user?.updateProfile({displayName: name });
+      res.user?.updateProfile({displayName: name }).then(
+        () => this.setUserData(res.user).subscribe()
+      );
     }))
   }
   
   logout() {
     return from(this.afAuth.signOut());
   }
+
+  setUserData(user: any) {
+    const url = `${firebaseUrl}/users.json`;
+    const userData: UserInterface = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName
+    }
+
+    return this.http.post(url, userData);
+  }
+
 
 }

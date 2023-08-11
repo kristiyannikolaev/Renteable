@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { DetailsComponent } from './details/details.component';
 import { EditComponent } from './edit/edit.component';
 import { RequestedOffersComponent } from './requested-offers/requested-offers.component';
+import { RecievedRequestsComponent } from './recieved-requests/recieved-requests.component';
 
 
 
@@ -21,7 +22,8 @@ import { RequestedOffersComponent } from './requested-offers/requested-offers.co
     HomeComponent,
     DetailsComponent,
     EditComponent,
-    RequestedOffersComponent
+    RequestedOffersComponent,
+    RecievedRequestsComponent
   ],
   imports: [
     CommonModule,

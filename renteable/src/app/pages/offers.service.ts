@@ -65,6 +65,17 @@ export class OffersService {
     return this.http.get<Offer>(this.url);
   }
 
+ getReceivedRequests(userUid: string): Observable<Offer[]> {
+  this.url = `${firebaseUrl}/offers.json`;
+    return this.http.get<Offer[]>(this.url).pipe(
+      map(offers => {
+        const receivedRequests = Object.values(offers).filter(offer => offer.ownerId === userUid);
+        this.offersSubject.next(receivedRequests);
+        return receivedRequests;
+      })
+    )
+ }
+
   searchOffers(query: string) {
     this.url = `${firebaseUrl}/offers.json`;
     return this.http.get<Offer[]>(this.url).pipe(
@@ -100,7 +111,7 @@ export class OffersService {
 
     return  this.getRequestedByArray(this.url).pipe(
       switchMap((res: any) => {
-        this.requestedByArr = res ? Object.values(res) : [];
+        this.requestedByArr = res ? Object.values(res) : []
         this.requestedByArr.push(`${this.user.uid} - ${startDate} - ${duration}`);
 
         return this.updateOffer(this.url, this.requestedByArr)
