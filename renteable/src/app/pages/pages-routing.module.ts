@@ -7,6 +7,7 @@ import { EditComponent } from './edit/edit.component';
 import { RequestedOffersComponent } from './requested-offers/requested-offers.component';
 import { RecievedRequestsComponent } from './recieved-requests/recieved-requests.component';
 import { canActivate,redirectUnauthorizedTo, redirectLoggedInTo} from '@angular/fire/compat/auth-guard'
+import { ErrorComponent } from './error/error.component';
 
 const redirectToLogin = () => redirectUnauthorizedTo(['user/login']);
 
@@ -20,6 +21,7 @@ const routes: Routes = [
         {path: 'requested', component: RequestedOffersComponent, ...canActivate(redirectToLogin)},
         {path: 'received-requests', component: RecievedRequestsComponent, ...canActivate(redirectToLogin)}
     ]},
+    { path: '**', component: ErrorComponent},
 ] 
 
 @NgModule({
