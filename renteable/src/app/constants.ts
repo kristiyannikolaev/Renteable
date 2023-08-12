@@ -2,4 +2,4 @@ export const firebaseUrl = 'https://renteable-d65fe-default-rtdb.europe-west1.fi
 
 export const projectId = 'renteable-d65fe';
 
-export const categoryOptions = ['Clothes', 'Rooms and Houses', 'Tools'];
+export const categoryOptions = ['Clothes', 'Rooms and Houses', 'Tools', 'Electronics', 'Mobility', 'Sport'];

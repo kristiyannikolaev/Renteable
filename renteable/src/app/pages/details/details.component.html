@@ -1,12 +1,12 @@
 <div>
-    {{ offer.imageUrl }}
+    <img src="{{ offer.imageUrl}}" alt="">
 </div>
 <div>
     <p>{{ offer.name }}</p>
     <p>{{ offer.location }}</p>
     <p>{{ offer.description }}</p>
     <p>{{ offer.pricePerDay }}</p>
-    <p>{{ offer.ownerId }}</p>
+    <p>{{ offer.ownerName }}</p>
     <mat-form-field>
         <mat-label>Enter a date range</mat-label>
         <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker" [min]="minDate">

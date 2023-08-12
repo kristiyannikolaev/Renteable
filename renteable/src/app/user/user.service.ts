@@ -5,6 +5,7 @@ import { from, map } from 'rxjs';
 import { firebaseUrl } from '../constants';
 import { UserInterface } from '../interfaces/User';
 import { HttpClient } from '@angular/common/http';
+import { Offer } from '../interfaces/Offer';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,14 @@ export class UserService {
     return this.http.post(url, userData);
   }
 
+  // addUserDisplayName(offer: Offer, uid: string) {
+  //   const usersUrl = `${firebaseUrl}/users.json`;
+  //   this.http.get(usersUrl).pipe(
+  //     map(users => {
+  //       const user = Object.values(users).filter(user => user.uid === uid);
+  //       const dispayName = 
+  //     })
+  //   )
+  // }
 
 }

@@ -30,6 +30,7 @@ export class OffersService {
       ...offerData,
       requestedBy: [],
       ownerId: this.user?.uid,
+      ownerName: this.user?.displayName
     };
 
     this.url = `${firebaseUrl}/offers.json`;
@@ -111,10 +112,19 @@ export class OffersService {
 
     return  this.getRequestedByArray(this.url).pipe(
       switchMap((res: any) => {
-        this.requestedByArr = res ? Object.values(res) : []
-        this.requestedByArr.push(`${this.user.uid} - ${startDate} - ${duration}`);
+        this.requestedByArr = res ? Object.values(res) : [];
 
-        return this.updateOffer(this.url, this.requestedByArr)
+        const usersUrl = `${firebaseUrl}/users.json`;
+        return this.http.get(usersUrl).pipe(
+          map((users) => {
+            const user = Object.values(users).filter(u => u.uid === this.user.uid);
+            const displayName = user[0].displayName;
+            
+            this.requestedByArr.push(`${this.user.uid} - ${startDate} - ${duration} - ${displayName}`);
+
+            return this.updateOffer(this.url, this.requestedByArr).subscribe();
+          })
+        )
       })
     )
   }

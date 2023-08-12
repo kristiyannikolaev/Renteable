@@ -6,7 +6,7 @@
             <div class="offer" *ngFor="let request of offer.requestedBy">
                 <img src="{{ offer.imageUrl }}" alt="offerImg" />
                 <p><strong>Name: </strong><span class="name">{{ offer.name }}</span></p>
-                <p><strong>Requested by: </strong><span class="requester">{{ request.split(' - ')[0] }}</span></p>
+                <p><strong>Requested by: </strong><span class="requester">{{ request.split(' - ')[3] }}</span></p>
                 <p><strong>From: </strong><span class="requester">{{ request.split(' - ')[1].slice(4, 15) }}</span></p>
                 <p><strong>Duration: </strong><span class="requester">{{ request.split(' - ')[2] }} days at {{ offer.pricePerDay | currency}}/day</span></p>
             </div>

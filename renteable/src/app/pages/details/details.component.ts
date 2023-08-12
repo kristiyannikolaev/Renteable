@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Observable, min } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { firebaseUrl } from 'src/app/constants';
 import { UserService } from 'src/app/user/user.service';
 import { Offer } from 'src/app/interfaces/Offer';
 import { OffersService } from '../offers.service';
@@ -32,6 +33,8 @@ export class DetailsComponent {
 
     this.offerSubscription$ = this.offersService.getOfferById(this.id).subscribe((fetchedOffer) => {
       this.offer = fetchedOffer;
+      
+      
     });
 
     this.user$ = this.userService.currentUser$;
@@ -66,6 +69,7 @@ export class DetailsComponent {
     const rentDuration = difference / (1000 * 3600 * 24);
 
     this.offersService.submitOfferRequest(this.id, startDate, rentDuration).subscribe({
+      next: () =>  { this.router.navigate(['/home'])},
       error: (err) => console.error(err.message)
     });
   }
