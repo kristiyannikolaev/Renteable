@@ -22,7 +22,6 @@
   .offer {
     display: flex;
     justify-content: space-between;
-    max-width: 70%;
     margin: 25px auto;
     background-color: white;
     border-radius: 5px;

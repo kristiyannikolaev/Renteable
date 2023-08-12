@@ -3,24 +3,26 @@
         <app-product-card [offer]="offer" />
     </div>
 </section> -->
-<app-header></app-header>
-<section id="catalog">
-    <ul *ngIf="offers$ | async as offers" class="card-wrapper">
-        <ng-container *ngFor="let offer of offers">
-            <li class="card">
-                <span class="category">{{ offer.category}}</span>
-                <img src="{{ offer.imageUrl }}" alt="">
-                
-                <p class="name">{{ offer.name}} </p>
-                
-                <p>
-                    <span class="value">{{ offer.pricePerDay | currency}}/day</span>
-                </p>
-                <a routerLink="/offers/{{offer._id}}/details" class="details-btn">Details</a>
-            </li>
-        </ng-container>
-    </ul>
-    <h2 *ngIf="!(offers$ | async)">
-        No uploaded offers yet.
-    </h2>
-</section>
+<div class="home">
+    <app-header></app-header>
+    <section id="catalog">
+        <ul *ngIf="offers$ | async as offers" class="card-wrapper">
+            <ng-container *ngFor="let offer of offers">
+                <li class="card">
+                    <span class="category">{{ offer.category}}</span>
+                    <img src="{{ offer.imageUrl }}" alt="">
+                    
+                    <p class="name">{{ offer.name}} </p>
+                    
+                    <p>
+                        <span class="value">{{ offer.pricePerDay | currency}}/day</span>
+                    </p>
+                    <a routerLink="/offers/{{offer._id}}/details" class="details-btn">Details</a>
+                </li>
+            </ng-container>
+        </ul>
+        <h2 *ngIf="!(offers$ | async)">
+            No uploaded offers yet.
+        </h2>
+    </section>
+</div>
