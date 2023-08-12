@@ -6,16 +6,19 @@ import { DetailsComponent } from './details/details.component';
 import { EditComponent } from './edit/edit.component';
 import { RequestedOffersComponent } from './requested-offers/requested-offers.component';
 import { RecievedRequestsComponent } from './recieved-requests/recieved-requests.component';
+import { canActivate,redirectUnauthorizedTo, redirectLoggedInTo} from '@angular/fire/compat/auth-guard'
+
+const redirectToLogin = () => redirectUnauthorizedTo(['user/login']);
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home'},
     { path: 'home', component: HomeComponent},
     { path: 'offers', children: [
-        {path: 'create', component: CreateComponent},
+        {path: 'create', component: CreateComponent, ...canActivate(redirectToLogin)},
         {path: ':id/details', component: DetailsComponent},
-        {path: ':id/edit', component: EditComponent},
-        {path: 'requested', component: RequestedOffersComponent},
-        {path: 'received-requests', component: RecievedRequestsComponent}
+        {path: ':id/edit', component: EditComponent, ...canActivate(redirectToLogin)},
+        {path: 'requested', component: RequestedOffersComponent, ...canActivate(redirectToLogin)},
+        {path: 'received-requests', component: RecievedRequestsComponent, ...canActivate(redirectToLogin)}
     ]},
 ] 
 

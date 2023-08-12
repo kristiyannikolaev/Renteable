@@ -26,6 +26,10 @@ export class UserService {
     });
   }
 
+  isAuthenticated():boolean {
+    return localStorage.getItem('user') ? true : false;
+  }
+
   login(email: string, password: string) {
     return  new Observable(observer => {
       this.afAuth.signInWithEmailAndPassword(email, password).then((res) => {
