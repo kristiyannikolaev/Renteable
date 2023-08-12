@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { from, map } from 'rxjs';
+import { from, map, Observable, catchError, throwError } from 'rxjs';
 
 import { firebaseUrl } from '../constants';
 import { UserInterface } from '../interfaces/User';
@@ -27,15 +27,38 @@ export class UserService {
   }
 
   login(email: string, password: string) {
-    return from(this.afAuth.signInWithEmailAndPassword(email, password));
+    return  new Observable(observer => {
+      this.afAuth.signInWithEmailAndPassword(email, password).then((res) => {
+        observer.complete();
+      })
+      .catch(error => {
+        const errorMessage = 'Invalid username or password';
+        observer.error(errorMessage);
+      });
+    }).pipe(
+      catchError(error => {
+        return throwError(error);
+      })
+    )
   }
 
   register(name: string, email: string, password: string) {
-    return from(this.afAuth.createUserWithEmailAndPassword(email, password).then((res) => {
-      res.user?.updateProfile({displayName: name }).then(
-        () => this.setUserData(res.user).subscribe()
-      );
-    }))
+    return  new Observable(observer => {
+      this.afAuth.createUserWithEmailAndPassword(email, password).then((res) => {
+        res.user?.updateProfile({displayName: name }).then(
+          () => this.setUserData(res.user).subscribe(() => {
+            observer.complete();
+          })
+        );
+      }).catch(error => {
+        const errorMessage = 'Email already in use';
+        observer.error(errorMessage);
+      }) 
+    }).pipe(
+      catchError(error => {
+        return throwError(error);
+      })
+    )
   }
   
   logout() {

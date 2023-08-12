@@ -18,13 +18,24 @@ export class LoginComponent {
   submitForm(form: NgForm) {
     if(!form.valid) return;
 
-    const { email, password } = form.value;
+    try{
+      const { email, password } = form.value;
     
-    this.userService.login(email, password).subscribe(() => {
-      this.router.navigate(['/home']);
-    });
+      this.userService.login(email, password).subscribe(
+        () => {
+        this.router.navigate(['/home']);
+        },
+        error => {
+          window.alert(error);
+        }
+        );
 
-    form.reset();
-    
+      form.reset();
+    } catch(err: any) {
+      if(err.message.includes('wrong-password') || err.message.includes('user-not-found')) {
+        console.log('here');
+        window.alert('Invalid username or password');
+      }
+    }
   }
 }

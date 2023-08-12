@@ -1,35 +1,38 @@
-<div>
-    <img src="{{ offer.imageUrl}}" alt="">
-</div>
-<div>
-    <p>{{ offer.name }}</p>
-    <p>{{ offer.location }}</p>
-    <p>{{ offer.description }}</p>
-    <p>{{ offer.pricePerDay }}</p>
-    <p>{{ offer.ownerName }}</p>
-    <mat-form-field>
-        <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker" [min]="minDate">
-          <input matStartDate formControlName="start" placeholder="Start date">
-          <input matEndDate formControlName="end" placeholder="End date">
-        </mat-date-range-input>
-        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-    </mat-form-field>
-    <div *ngIf="dateErrMessage">
-        <p class="error">{{ dateErrMessage}}</p>
+<div class="container">
+    <div>
+        <p>{{ offer.location }}</p>
+        <img src="{{ offer.imageUrl}}" alt="">
+    </div>
+    <div class="information">
+        <h1>{{ offer.name }}</h1>
+        <p>Uploaded by: <strong>{{ offer.ownerName }}</strong></p>
+
+        <h3>{{ offer.description }}</h3>
+        <h4>Price per day: {{ offer.pricePerDay | currency}}</h4>
+        <mat-form-field>
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker" [min]="minDate">
+              <input matStartDate formControlName="start" placeholder="Start date">
+              <input matEndDate formControlName="end" placeholder="End date">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <div *ngIf="dateErrMessage">
+            <p class="error">{{ dateErrMessage}}</p>
+        </div>
+        
     </div>
     
+    <ng-container *ngIf="(user$ | async) as user">
+        <div class="btns" *ngIf="user.uid === offer.ownerId">
+            <button class="edit-btn" routerLink="/offers/{{ offer._id }}/edit">Edit</button>
+            <button class="delete-btn" (click)="onDelete()">Delete</button>
+        </div>
+        <div *ngIf="user.uid !== offer.ownerId">
+            <button class="submit-btn" *ngIf="!alreadySubmitted" (click)="onSubmitRequest()">Submit request</button>
+            <p *ngIf="alreadySubmitted">You have already submitted request for this offer</p>
+        </div>    
+    </ng-container>    
 </div>
-
-<ng-container *ngIf="(user$ | async) as user">
-    <div *ngIf="user.uid === offer.ownerId">
-        <button routerLink="/offers/{{ offer._id }}/edit">Edit</button>
-        <button (click)="onDelete()">Delete</button>
-    </div>
-    <div *ngIf="user.uid !== offer.ownerId">
-        <button *ngIf="!alreadySubmitted" (click)="onSubmitRequest()">Submit request</button>
-        <p *ngIf="alreadySubmitted">You have already submitted request for this offer</p>
-    </div>    
-</ng-container>

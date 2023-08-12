@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6em;
+    background-color: white;
+    padding: 1.5em;
+}
+
+.information {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+}
+
+.submit-btn {
+    margin-top: 11em;
+    margin-right: 3em;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    background-color: #555;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: rgb(15, 170, 15);
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin-top: 10em;
+    margin-right: 3em;
+}
+
+.btns button {
+    padding: 1em;
+    border-radius: 0.5em;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #555;
+    color: white;
+}
+
+.btns .edit-btn:hover {
+    background-color: rgba(207, 201, 201, 0.621);
+    color: #000;
+}
+
+.btns .delete-btn:hover {
+    background-color: rgb(227, 12, 12);
+    color: white;
+}
