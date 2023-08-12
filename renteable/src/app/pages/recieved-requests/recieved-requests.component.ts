@@ -14,6 +14,9 @@ import { UserService } from 'src/app/user/user.service';
 export class RecievedRequestsComponent implements OnInit {
   receivedRequests$: Observable<Offer[]>
   user: any;
+  showButtons: boolean = true;
+  errMessage = '';
+
   constructor(private offersService: OffersService, private userService: UserService) {}
 
   ngOnInit(): void {
@@ -25,5 +28,33 @@ export class RecievedRequestsComponent implements OnInit {
         })
       }
     })
+  }
+
+  acceptOffer(currentRequest: string, currentOffer: Offer) {
+    if(currentRequest.split(' - ').length >= 5)
+    this.updateOfferRequestStatus(currentRequest, currentOffer, 'Accepted')?.subscribe({
+      error: (err) => window.alert(err.message)
+    });
+    
+  }
+
+  declineOffer(currentRequest: string, currentOffer: Offer) {
+    if(currentRequest.split( ' - ').length >= 5) return;
+    this.updateOfferRequestStatus(currentRequest, currentOffer, 'Declined')?.subscribe(() => {
+      
+    })
+  }
+
+  updateOfferRequestStatus(request: string, offer: Offer, status: string) {
+    if(request.split( ' - ').length >= 5) throw new Error ('You have already made a descision on this request');
+    const requests = offer.requestedBy;
+    const currRequestIndex = requests?.indexOf(request);
+    if(currRequestIndex === -1) return 
+    const updatedRequestStatus = request + ` - ${status}`;
+    requests?.splice(currRequestIndex!, 1, updatedRequestStatus);
+    offer.requestedBy = requests;
+
+    const url = `${firebaseUrl}/offers/${offer._id}.json`;
+    return this.offersService.updateOffer(url, offer);
   }
 }

@@ -9,6 +9,13 @@
                 <p><strong>Requested by: </strong><span class="requester">{{ request.split(' - ')[3] }}</span></p>
                 <p><strong>From: </strong><span class="requester">{{ request.split(' - ')[1].slice(4, 15) }}</span></p>
                 <p><strong>Duration: </strong><span class="requester">{{ request.split(' - ')[2] }} days at {{ offer.pricePerDay | currency}}/day</span></p>
+                <div  class="action-btns">
+                   <button (click)="acceptOffer(request, offer)">Accept</button>
+                   <button (click)="declineOffer(request, offer)">Decline</button>
+                </div>
+            </div>
+            <div class="error">
+                {{ errMessage }}
             </div>
         </ng-container>
         
