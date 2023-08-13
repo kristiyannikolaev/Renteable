@@ -16,6 +16,7 @@ export class RequestedOffersComponent implements OnInit {
   user: any;
   status: string = '';
   requestedOffers: Offer[];
+  isLoading: boolean = true;
 
   constructor(
     private offersService: OffersService,
@@ -39,7 +40,6 @@ export class RequestedOffersComponent implements OnInit {
       )
       .subscribe(() => {
         this.offersService.offersSubject.subscribe((offers) => {
-          console.log(offers)
           this.requestedOffers = offers;
           this.requestedOffers.forEach(offer => {
             if(offer.requestedBy) {
@@ -49,7 +49,7 @@ export class RequestedOffersComponent implements OnInit {
               offer.requestedBy = [];
             }
           })
-          console.log(this.requestedOffers);
+          this.isLoading = false;
         });
       });
   }

@@ -1,13 +1,18 @@
 <section id="dashboard">
-    <h2>Requested Offers</h2>
-    <h3 *ngIf="!requestedOffers">You haven't requested any offers yet.</h3>
-    <ng-container *ngIf="requestedOffers">
-        <div class="offer" *ngFor="let offer of requestedOffers">
-            <img src="{{ offer.imageUrl }}" alt="offerImg" />
-            <p><strong>Name: </strong><span class="name">{{ offer.name }}</span></p>
-            <p><strong>Price: </strong><span class="price">{{ offer.pricePerDay | currency}}</span></p>
-            <p *ngIf="offer.requestedBy![0].split(' - ').length < 5">Wait for a decision from owner...</p>
-            <p *ngIf="offer.requestedBy![0].split(' - ').length === 5">Your request was {{ offer.requestedBy![0].split(' - ')[offer.requestedBy![0].split(' - ').length - 1]}}</p>
-        </div>
+    <ng-container *ngIf="isLoading">
+        <app-loader />
     </ng-container>
+    <ng-container *ngIf="!isLoading">
+        <h2>Requested Offers</h2>
+        <h3 *ngIf="!requestedOffers">You haven't requested any offers yet.</h3>
+        <ng-container *ngIf="requestedOffers">
+            <div class="offer" *ngFor="let offer of requestedOffers">
+                <img src="{{ offer.imageUrl }}" alt="offerImg" />
+                <p><strong>Name: </strong><span class="name">{{ offer.name }}</span></p>
+                <p><strong>Price: </strong><span class="price">{{ offer.pricePerDay | currency}}</span></p>
+                <p *ngIf="offer.requestedBy![0].split(' - ').length < 5">Wait for a decision from owner...</p>
+                <p *ngIf="offer.requestedBy![0].split(' - ').length === 5">Your request was {{ offer.requestedBy![0].split(' - ')[offer.requestedBy![0].split(' - ').length - 1]}}</p>
+            </div>
+        </ng-container>
+    </ng-container>  
 </section>

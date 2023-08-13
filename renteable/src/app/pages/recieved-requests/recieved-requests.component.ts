@@ -16,6 +16,7 @@ export class RecievedRequestsComponent implements OnInit {
   user: any;
   showButtons: boolean = true;
   errMessage = '';
+  isLoading: boolean = true;
 
   constructor(private offersService: OffersService, private userService: UserService) {}
 
@@ -25,6 +26,7 @@ export class RecievedRequestsComponent implements OnInit {
         this.user = user;
         this.offersService.getReceivedRequests(user.uid).subscribe(() => {
           this.receivedRequests$ = this.offersService.offersSubject.asObservable();
+          this.isLoading = false;
         })
       }
     })

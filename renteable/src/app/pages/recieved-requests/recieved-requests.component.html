@@ -1,23 +1,28 @@
 <section id="dashboard">
-    <h2>Received requests</h2>
-    <h3 *ngIf="!receivedRequests$">You haven't requested any offers yet.</h3>
-    <ng-container *ngIf="receivedRequests$ | async as offers">
-        <ng-container *ngFor="let offer of offers">
-            <div class="offer" *ngFor="let request of offer.requestedBy">
-                <img src="{{ offer.imageUrl }}" alt="offerImg" />
-                <p><strong>Name: </strong><span class="name">{{ offer.name }}</span></p>
-                <p><strong>Requested by: </strong><span class="requester">{{ request.split(' - ')[3] }}</span></p>
-                <p><strong>From: </strong><span class="date">{{ request.split(' - ')[1].slice(4, 15) }}</span></p>
-                <p><strong>Duration: </strong><span class="duration">{{ request.split(' - ')[2] }} days at {{ offer.pricePerDay | currency}}/day</span></p>
-                <div  class="action-btns">
-                   <button class="accept-btn" (click)="acceptOffer(request, offer)">Accept</button>
-                   <button class="decline-btn" (click)="declineOffer(request, offer)">Decline</button>
+    <ng-container *ngIf="isLoading">
+        <app-loader />
+    </ng-container>
+    <ng-container *ngIf="!isLoading">
+        <h2>Received requests</h2>
+        <h3 *ngIf="!receivedRequests$">You haven't requested any offers yet.</h3>
+        <ng-container *ngIf="receivedRequests$ | async as offers">
+            <ng-container *ngFor="let offer of offers">
+                <div class="offer" *ngFor="let request of offer.requestedBy">
+                    <img src="{{ offer.imageUrl }}" alt="offerImg" />
+                    <p><strong>Name: </strong><span class="name">{{ offer.name }}</span></p>
+                    <p><strong>Requested by: </strong><span class="requester">{{ request.split(' - ')[3] }}</span></p>
+                    <p><strong>From: </strong><span class="date">{{ request.split(' - ')[1].slice(4, 15) }}</span></p>
+                    <p><strong>Duration: </strong><span class="duration">{{ request.split(' - ')[2] }} days at {{ offer.pricePerDay | currency}}/day</span></p>
+                    <div  class="action-btns">
+                    <button class="accept-btn" (click)="acceptOffer(request, offer)">Accept</button>
+                    <button class="decline-btn" (click)="declineOffer(request, offer)">Decline</button>
+                    </div>
                 </div>
-            </div>
-            <div class="error">
-                {{ errMessage }}
-            </div>
+                <div class="error">
+                    {{ errMessage }}
+                </div>
+            </ng-container>
+            
         </ng-container>
-        
     </ng-container>
 </section>
