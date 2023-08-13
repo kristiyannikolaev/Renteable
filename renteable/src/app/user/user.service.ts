@@ -33,7 +33,7 @@ export class UserService {
   login(email: string, password: string) {
     return  new Observable(observer => {
       this.afAuth.signInWithEmailAndPassword(email, password).then((res) => {
-        observer.complete();
+        observer.next();
       })
       .catch(error => {
         const errorMessage = 'Invalid username or password';
@@ -51,7 +51,7 @@ export class UserService {
       this.afAuth.createUserWithEmailAndPassword(email, password).then((res) => {
         res.user?.updateProfile({displayName: name }).then(
           () => this.setUserData(res.user).subscribe(() => {
-            observer.complete();
+            observer.next();
           })
         );
       }).catch(error => {

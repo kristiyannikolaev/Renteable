@@ -32,12 +32,11 @@ export class RegisterComponent {
 
       this.userService.register(name, email, password).subscribe(
         () => {
-        this.router.navigate(['/home']);
+          this.router.navigate(['/home']);
         },
         error => {
           window.alert(error);
-        }  
-      )
+        })
     } catch(err: any) {
       console.log(err.message);
       if(err.message.includes('email-already')) {
